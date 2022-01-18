@@ -74,10 +74,15 @@ function App() {
     setNewStudent(getEmptyStudent());
   };
 
+  const selectFilter = (student)=>{
+    if(counselorFilter==="Yanelis"){
+      return student.counselor.includes(counselorFilter)
+    }
+  };
   // Pintar adalabers
   const renderStudents = students
     .filter((student) => {
-      return student.name.includes(nameFilter.toLowerCase());
+      return student.name.includes(nameFilter.toLowerCase()) || selectFilter(student);
     })
     .map((student) => {
       return (
