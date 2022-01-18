@@ -13,7 +13,7 @@ function App() {
     speciality: "",
   });
   const [nameFilter, setNameFilter] = useState("");
-  const [counselorFilter, setCounselorFilter]= useState("");
+  const [counselorFilter, setCounselorFilter]= useState("all");
 
   // Effects
   // Cojo los datos del api
@@ -74,16 +74,14 @@ function App() {
     setNewStudent(getEmptyStudent());
   };
 
-  const selectFilter = (student)=>{
-    if(counselorFilter==="Yanelis"){
-      return student.counselor.includes(student.counselor==="Yanelis")
-      // return setCounselorFilter("Yanelis");
-    }
-  };
+ 
   // Pintar adalabers
   const renderStudents = students
     .filter((student) => {
-      return student.name.includes(nameFilter.toLowerCase()) || selectFilter(student);
+      return student.name.includes(nameFilter.toLowerCase())
+    })
+    .filter((student) => {
+      return student.counselor.includes(counselorFilter)
     })
     .map((student) => {
       return (
@@ -97,7 +95,7 @@ function App() {
 
   return (
     <div>
-      <h1>Adalabers- promo patatita</h1>
+      <h1>Adalabers promo patatita</h1>
       <h2>Filtrar adalabers:</h2>
       <form onSubmit={handleForm}>
         <label htmlFor="nameFilter"> Nombre:
@@ -111,10 +109,10 @@ function App() {
         <label htmlFor="counselorFilter"> Escoge una tutora:
           <select onChange={handleCounselorFilter}
           >
-            <option disabled select>Escoge una opción</option>
+            <option value="all" disabled select>Escoge una opción</option>
             <option value="Yanelis">Yanelis</option>
             <option value="Dayana">Dayana</option>
-            <option value="Iván">Iván </option>
+            <option value="Iván">Iván</option>
           </select>
         </label>
       </form>
