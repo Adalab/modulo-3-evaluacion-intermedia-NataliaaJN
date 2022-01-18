@@ -4,13 +4,25 @@ import studentsData from "../data/studentsData.json";
 
 function App() {
   // States
-  const [students, setStudents] = useState(studentsData);
+  const[students, setStudents] = useState(studentsData);
+  const[newStudent, setNewStudent]= useState({
+    name:"",
+    counselor: "",
+    speciality: "",
+  });
 
 
   // Functions
-  const renderStudents= () => {
-    return students
-  };
+  const renderStudents= students.map((student) => {
+      return(
+        <tr key={student.results.id}>
+            <td>{student.results.name}</td>
+            <td>{student.results.counselor}</td>
+            <td>{student.results.speciality}</td>
+          </tr>
+      );
+    });
+  
 
   return (
     <div>
@@ -25,17 +37,7 @@ function App() {
         </thead>
 
         <tbody>
-          <tr>
-            <td>Maricarmen</td>
-            <td>Amparo</td>
-            <td>Escandia</td>
-          </tr>
-
-          <tr>
-            <td>Columa 1 de la fila 2</td>
-            <td>Columa 2 de la fila 2</td>
-            <td>Columa 3 de la fila 2</td>
-          </tr>
+          {renderStudents}
         </tbody>
       </table>
     </div>
