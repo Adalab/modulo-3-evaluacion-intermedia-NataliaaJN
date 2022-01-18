@@ -2,10 +2,11 @@ import "../styles/App.scss";
 import { useState, useEffect } from "react";
 import studentsData from "../data/studentsData.json";
 import getStudents from "../services/api";
+import ls from "../services/local-storage"
 
 function App() {
   // States
-  const [students, setStudents] = useState([]);
+  const [students, setStudents] = useState(ls.get("students",""));
   const [newStudent, setNewStudent] = useState({
     name: "",
     counselor: "",
@@ -19,6 +20,11 @@ function App() {
       setStudents(data);
     });
   }, []);
+
+  // Lo guardo en localStorage
+  useEffect(() => {
+    ls.set("students", students);
+    }, [students]);
 
   // Functions
   const handleForm = (ev) => {
