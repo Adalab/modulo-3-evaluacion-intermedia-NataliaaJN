@@ -6,7 +6,7 @@ import ls from "../services/local-storage"
 
 function App() {
   // States
-  const [students, setStudents] = useState(ls.get("students",""));
+  const [students, setStudents] = useState(ls.get("students",[]));
   const [newStudent, setNewStudent] = useState({
     name: "",
     counselor: "",
@@ -17,7 +17,8 @@ function App() {
   // Cojo los datos del api
   useEffect(() => {
     getStudents().then((data)=> {
-      setStudents(data);
+      console.log(data);
+      setStudents(data.results);
     });
   }, []);
 
@@ -62,12 +63,13 @@ function App() {
   };
 
   // Pintar adalabers
+  console.log(students);
   const renderStudents = students.map((student) => {
     return (
-      <tr key={student.results.id}>
-        <td>{student.results.name}</td>
-        <td>{student.results.counselor}</td>
-        <td>{student.results.speciality}</td>
+      <tr key={student.id}>
+        <td>{student.name}</td>
+        <td>{student.counselor}</td>
+        <td>{student.speciality}</td>
       </tr>
     );
   });
