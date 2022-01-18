@@ -76,7 +76,8 @@ function App() {
 
   const selectFilter = (student)=>{
     if(counselorFilter==="Yanelis"){
-      return student.counselor.includes(counselorFilter)
+      return student.counselor.includes(student.counselor==="Yanelis")
+      // return setCounselorFilter("Yanelis");
     }
   };
   // Pintar adalabers
