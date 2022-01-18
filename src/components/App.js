@@ -4,25 +4,35 @@ import studentsData from "../data/studentsData.json";
 
 function App() {
   // States
-  const[students, setStudents] = useState(studentsData);
-  const[newStudent, setNewStudent]= useState({
-    name:"",
+  const [students, setStudents] = useState(studentsData);
+  const [newStudent, setNewStudent] = useState({
+    name: "",
     counselor: "",
     speciality: "",
   });
 
-
   // Functions
-  const renderStudents= students.map((student) => {
-      return(
-        <tr key={student.results.id}>
-            <td>{student.results.name}</td>
-            <td>{student.results.counselor}</td>
-            <td>{student.results.speciality}</td>
-          </tr>
-      );
+  const handleForm = (ev) => {
+    ev.preventDefault();
+  };
+
+  const handleChangeInputs = (ev)=>{
+    const inputChanged= ev.currentTarget.id;
+    setNewStudent({
+      ...newStudent,
+      [inputChanged]: ev.currentTarget.value
     });
-  
+  };
+
+  const renderStudents = students.map((student) => {
+    return (
+      <tr key={student.results.id}>
+        <td>{student.results.name}</td>
+        <td>{student.results.counselor}</td>
+        <td>{student.results.speciality}</td>
+      </tr>
+    );
+  });
 
   return (
     <div>
@@ -36,10 +46,16 @@ function App() {
           </tr>
         </thead>
 
-        <tbody>
-          {renderStudents}
-        </tbody>
+        <tbody>{renderStudents}</tbody>
       </table>
+
+      <h2>Añadir una Adalaber</h2>
+      <form onSubmit={handleForm}>
+        <input type="text" value={newStudent} onChange={handleChangeInputs}></input>
+        <input type="text" value={newStudent} onChange={handleChangeInputs}></input>
+        <input type="text" value={newStudent} onChange={handleChangeInputs}></input>
+        <input type="submit" value={newStudent} onChange={handleChangeInputs}></input>
+      </form>
     </div>
   );
 }
