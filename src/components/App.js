@@ -114,7 +114,7 @@ function App() {
             <option disabled select>Escoge una opción</option>
             <option value="Yanelis">Yanelis</option>
             <option value="Dayana">Dayana</option>
-            <option value="Iván">Iván</option>
+            <option value="Iván">Iván </option>
           </select>
         </label>
       </form>
