@@ -46,7 +46,7 @@ function App() {
 
   // Recoger los datos de los inputs
   const handleChangeInputs = (ev) => {
-    const inputChanged = ev.currentTarget.name;
+    const inputChanged = ev.currentTarget.id;
     setNewStudent({
       ...newStudent,
       [inputChanged]: ev.currentTarget.value,
@@ -69,6 +69,7 @@ function App() {
       name: newStudent.name,
       counselor: newStudent.counselor,
       speciality: newStudent.speciality,
+      //id: parseInt(Math.random()*1000);
     };
     setStudents([...students, newAdalaber]);
     setNewStudent(getEmptyStudent());
@@ -78,10 +79,14 @@ function App() {
   // Pintar adalabers
   const renderStudents = students
     .filter((student) => {
-      return student.name.includes(nameFilter.toLowerCase())
+      return student.name.toLowerCase().includes(nameFilter.toLowerCase())
     })
     .filter((student) => {
-      return student.counselor.includes(counselorFilter)
+      if(counselorFilter=== "all"){
+        return true;
+      } else{
+        return student.counselor=== counselorFilter;
+      }
     })
     .map((student) => {
       return (
@@ -107,7 +112,7 @@ function App() {
           ></input>
         </label>
         <label htmlFor="counselorFilter"> Escoge una tutora:
-          <select onChange={handleCounselorFilter}
+          <select value={counselorFilter} onChange={handleCounselorFilter}
           >
             <option value="all" disabled select>Escoge una opción</option>
             <option value="Yanelis">Yanelis</option>
