@@ -79,7 +79,7 @@ function App() {
   // Pintar adalabers
   const renderStudents = students
     .filter((student) => {
-      return student.name.toLowerCase().includes(nameFilter.toLowerCase())
+      return student.name.toLocaleLowerCase().includes(nameFilter.toLocaleLowerCase())
     })
     .filter((student) => {
       if(counselorFilter=== "all"){
