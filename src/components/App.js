@@ -1,15 +1,24 @@
 import "../styles/App.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import studentsData from "../data/studentsData.json";
+import getStudents from "../services/api";
 
 function App() {
   // States
-  const [students, setStudents] = useState(studentsData);
+  const [students, setStudents] = useState([]);
   const [newStudent, setNewStudent] = useState({
     name: "",
     counselor: "",
     speciality: "",
   });
+
+  // Effects
+  // Cojo los datos del api
+  useEffect(() => {
+    getStudents().then((data)=> {
+      setStudents(data);
+    });
+  }, []);
 
   // Functions
   const handleForm = (ev) => {
