@@ -1,6 +1,5 @@
 import "../styles/App.scss";
 import { useState, useEffect } from "react";
-import studentsData from "../data/studentsData.json";
 import getStudents from "../services/api";
 import ls from "../services/local-storage";
 
@@ -19,7 +18,6 @@ function App() {
   // Cojo los datos del api
   useEffect(() => {
     getStudents().then((data) => {
-      console.log(data);
       setStudents(data.results);
     });
   }, []);
@@ -69,7 +67,7 @@ function App() {
       name: newStudent.name,
       counselor: newStudent.counselor,
       speciality: newStudent.speciality,
-      //id: parseInt(Math.random()*1000);
+      //id: students.length;
     };
     setStudents([...students, newAdalaber]);
     setNewStudent(getEmptyStudent());
@@ -90,31 +88,42 @@ function App() {
     })
     .map((student) => {
       return (
-        <tr key={student.id}>
-          <td>{student.name}</td>
-          <td>{student.counselor}</td>
-          <td>{student.speciality}</td>
+        <tr className="table__body" key={student.id}>
+          <td className="table__body--tableItem">{student.name}</td>
+          <td className="table__body--tableItem">{student.counselor}</td>
+          <td className="table__body--tableItem">{student.speciality}</td>
+          <td className="table__body--tableSocialNetworkItem">
+            {student.social_networks.length !== 0 ? (
+              student.social_networks.map((eachSocialNetwork, index)=>{
+                  return <a key={index} className="table__body--tableSocialNetworkItem--socialNetwork" href={eachSocialNetwork.url}>
+                    {eachSocialNetwork.name}
+                  </a>
+                })
+                ) : <p className="table__body--tableSocialNetworkItem--noSocialNetwork">No tiene redes sociales</p>
+              }
+          </td>
         </tr>
       );
     });
 
   return (
     <div>
-      <h1>Adalabers promo patatita</h1>
-      <h2>Filtrar adalabers:</h2>
-      <form onSubmit={handleForm}>
-        <label htmlFor="nameFilter"> Nombre:
+      <h1 className="title">Adalabers promo patatita</h1>
+      <h2 className="filterTitle">Filtrar adalabers:</h2>
+      <form className="filterForm" onSubmit={handleForm}>
+        <label className="filterForm__labelNameFilter" htmlFor="nameFilter"> Nombre:
           <input
             id="nameFilter"
+            className="filterForm__labelNameFilter--input"
             type="text"
             value={nameFilter}
             onChange={handleNameFilter}
           ></input>
         </label>
-        <label htmlFor="counselorFilter"> Escoge una tutora:
-          <select value={counselorFilter} onChange={handleCounselorFilter}
+        <label className="filterForm__labelCounselorFilter" htmlFor="counselorFilter"> Escoge una tutora:
+          <select className="filterForm__labelCounselorFilter--select" value={counselorFilter} onChange={handleCounselorFilter}
           >
-            <option value="all" disabled select>Escoge una opción</option>
+            <option value="all" select>Mostrar todas</option>
             <option value="Yanelis">Yanelis</option>
             <option value="Dayana">Dayana</option>
             <option value="Iván">Iván</option>
@@ -122,48 +131,52 @@ function App() {
         </label>
       </form>
 
-      <table>
+      <table className="table">
         <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Tutores</th>
-            <th>Especialidad</th>
+          <tr className="table__head">
+            <th className="table__head--headItem">Nombre</th>
+            <th className="table__head--headItem">Tutores</th>
+            <th className="table__head--headItem">Especialidad</th>
+            <th className="table__head--headItem">Redes sociales</th>
           </tr>
         </thead>
 
         <tbody>{renderStudents}</tbody>
       </table>
 
-      <h2>Añadir una Adalaber</h2>
-      <form onSubmit={handleForm}>
-        <label htmlFor="name">
+      <h2 className="addAdalaberTitle">Añadir una Adalaber</h2>
+      <form className="addAdalaberForm" onSubmit={handleForm}>
+        <label className="addAdalaberForm__label" htmlFor="name">
           Nombre:
           <input
             id="name"
+            className="addAdalaberForm__label--input"
             type="text"
             value={newStudent.name}
             onChange={handleChangeInputs}
           ></input>
         </label>
-        <label htmlFor="counselor">
+        <label className="addAdalaberForm__label" htmlFor="counselor">
           Tutora:
           <input
             id="counselor"
+            className="addAdalaberForm__label--input"
             type="text"
             value={newStudent.counselor}
             onChange={handleChangeInputs}
           ></input>
         </label>
-        <label htmlFor="speciality">
+        <label className="addAdalaberForm__label" htmlFor="speciality">
           Especialidad:
           <input
             id="speciality"
+            className="addAdalaberForm__label--input"
             type="text"
             value={newStudent.speciality}
             onChange={handleChangeInputs}
           ></input>
         </label>
-        <input type="submit" value="Añadir" onClick={handleAddAdalaber}></input>
+        <input className="addAdalaberForm__addBtn" type="submit" value="Añadir una nueva Adalaber" onClick={handleAddAdalaber}></input>
       </form>
     </div>
   );

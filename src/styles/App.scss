@@ -1,0 +1,116 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    margin: 30px;
+  font-family: "Roboto", sans-serif;
+  background-color: #f9eee8;
+}
+.title {
+    text-transform: capitalize;
+    text-align: center;
+}
+.filterTitle{
+    text-transform: capitalize; 
+    margin: 15px 0;
+    border-bottom: 1px solid #4b1409;
+}
+
+.filterForm{
+    width: 50vw;
+    display: flex;
+    justify-content: space-between;
+    &__labelNameFilter{
+        width: 250px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &--input{
+            border-radius: 15px;
+        }
+    }
+    &__labelCounselorFilter{
+        width: 300px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &--select{
+            border-radius: 15px;
+            padding: 3px 5px;
+        }
+    }
+}
+
+.table{
+    width: 75vw;
+    margin-top: 20px;
+    
+    &__head{
+        background-color: #4b1409;
+        color: white;
+        &--headItem{
+            padding: 5px 0;
+            letter-spacing: 2px;
+        }
+    }
+
+    &__body{
+       &:nth-child(even){
+           background-color: #ebcabe;
+       }
+       &--tableItem{
+           width: 25%;
+        padding: 5px 0 5px 10px;
+       }
+       &--tableSocialNetworkItem{
+        display: flex;
+        justify-content: flex-start;
+        padding: 5px 0;
+
+        &--socialNetwork{
+            padding: 0 20px 0 10px ;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #4b1409;
+            cursor: pointer;
+
+        }
+        &--noSocialNetwork{
+            padding: 0 10px;
+        }
+       }
+    }
+}
+
+.addAdalaberTitle{
+margin: 30px 0 5px 0 ;
+border-bottom: 1px solid #4b1409;
+}
+.addAdalaberForm{
+    display: flex;
+    flex-direction: column;
+    &__label{
+        width: 300px;
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+        &--input{
+            border-radius: 15px;
+        }
+    }
+    &__addBtn{
+        width: 300px;
+        background-color: #4b1409;
+        color: white;
+        font-family: "Roboto", sans-serif;
+        letter-spacing: 1.5px;
+        margin-top: 10px;
+        padding: 5px 0;
+        cursor: pointer;
+        border: 0px;
+        border-radius: 20px;
+    }
+}
