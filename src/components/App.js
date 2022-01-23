@@ -12,14 +12,16 @@ function App() {
     speciality: "",
   });
   const [nameFilter, setNameFilter] = useState("");
-  const [counselorFilter, setCounselorFilter]= useState("all");
+  const [counselorFilter, setCounselorFilter] = useState("all");
 
   // Effects
   // Cojo los datos del api
   useEffect(() => {
-    getStudents().then((data) => {
-      setStudents(data.results);
-    });
+    if (students?.length === 0) {
+      getStudents().then((data) => {
+        setStudents(data.results);
+      });
+    }
   }, []);
 
   // Lo guardo en localStorage
@@ -39,7 +41,7 @@ function App() {
   };
   // Filtrar por tutora
   const handleCounselorFilter = (ev) => {
-    setCounselorFilter(ev.currentTarget.value)
+    setCounselorFilter(ev.currentTarget.value);
   };
 
   // Recoger los datos de los inputs
@@ -67,40 +69,49 @@ function App() {
       name: newStudent.name,
       counselor: newStudent.counselor,
       speciality: newStudent.speciality,
-      //id: students.length;
     };
     setStudents([...students, newAdalaber]);
     setNewStudent(getEmptyStudent());
   };
 
- 
   // Pintar adalabers
   const renderStudents = students
     .filter((student) => {
-      return student.name.toLocaleLowerCase().includes(nameFilter.toLocaleLowerCase())
+      return student.name
+        .toLocaleLowerCase()
+        .includes(nameFilter.toLocaleLowerCase());
     })
     .filter((student) => {
-      if(counselorFilter=== "all"){
+      if (counselorFilter === "all") {
         return true;
-      } else{
-        return student.counselor=== counselorFilter;
+      } else {
+        return student.counselor === counselorFilter;
       }
     })
-    .map((student) => {
+    .map((student, studentIndex) => {
       return (
         <tr className="table__body" key={student.id}>
           <td className="table__body--tableItem">{student.name}</td>
           <td className="table__body--tableItem">{student.counselor}</td>
           <td className="table__body--tableItem">{student.speciality}</td>
           <td className="table__body--tableSocialNetworkItem">
-            {student.social_networks.length !== 0 ? (
-              student.social_networks.map((eachSocialNetwork, index)=>{
-                  return <a key={index} className="table__body--tableSocialNetworkItem--socialNetwork" href={eachSocialNetwork.url}>
+            {student.social_networks?.length > 0 ? (
+              student.social_networks.map((eachSocialNetwork, index) => {
+                return (
+                  <a
+                    key={`${studentIndex}-${student.name}-${eachSocialNetwork.name}-${index}`}
+                    className="table__body--tableSocialNetworkItem--socialNetwork"
+                    href={eachSocialNetwork.url}
+                  >
                     {eachSocialNetwork.name}
                   </a>
-                })
-                ) : <p className="table__body--tableSocialNetworkItem--noSocialNetwork">No tiene redes sociales</p>
-              }
+                );
+              })
+            ) : (
+              <p className="table__body--tableSocialNetworkItem--noSocialNetwork">
+                No tiene redes sociales
+              </p>
+            )}
           </td>
         </tr>
       );
@@ -111,7 +122,9 @@ function App() {
       <h1 className="title">Adalabers promo patatita</h1>
       <h2 className="filterTitle">Filtrar adalabers:</h2>
       <form className="filterForm" onSubmit={handleForm}>
-        <label className="filterForm__labelNameFilter" htmlFor="nameFilter"> Nombre:
+        <label className="filterForm__labelNameFilter" htmlFor="nameFilter">
+          {" "}
+          Nombre:
           <input
             id="nameFilter"
             className="filterForm__labelNameFilter--input"
@@ -120,10 +133,18 @@ function App() {
             onChange={handleNameFilter}
           ></input>
         </label>
-        <label className="filterForm__labelCounselorFilter" htmlFor="counselorFilter"> Escoge una tutora:
-          <select className="filterForm__labelCounselorFilter--select" value={counselorFilter} onChange={handleCounselorFilter}
+        <label
+          className="filterForm__labelCounselorFilter"
+          htmlFor="counselorFilter"
+        >
+          {" "}
+          Escoge una tutora:
+          <select
+            className="filterForm__labelCounselorFilter--select"
+            value={counselorFilter}
+            onChange={handleCounselorFilter}
           >
-            <option value="all" select>Mostrar todas</option>
+            <option value="all">Mostrar todas</option>
             <option value="Yanelis">Yanelis</option>
             <option value="Dayana">Dayana</option>
             <option value="Iván">Iván</option>
@@ -176,7 +197,12 @@ function App() {
             onChange={handleChangeInputs}
           ></input>
         </label>
-        <input className="addAdalaberForm__addBtn" type="submit" value="Añadir una nueva Adalaber" onClick={handleAddAdalaber}></input>
+        <input
+          className="addAdalaberForm__addBtn"
+          type="submit"
+          value="Añadir una nueva Adalaber"
+          onClick={handleAddAdalaber}
+        ></input>
       </form>
     </div>
   );
