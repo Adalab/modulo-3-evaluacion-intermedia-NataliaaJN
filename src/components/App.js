@@ -10,6 +10,7 @@ function App() {
     name: "",
     counselor: "",
     speciality: "",
+    id: students.length,
   });
   const [nameFilter, setNameFilter] = useState("");
   const [counselorFilter, setCounselorFilter] = useState("all");
@@ -88,9 +89,9 @@ function App() {
         return student.counselor === counselorFilter;
       }
     })
-    .map((student, studentIndex) => {
+    .map((student) => {
       return (
-        <tr className="table__body" key={student.id}>
+        <tr key={student.id} className="table__body" >
           <td className="table__body--tableItem">{student.name}</td>
           <td className="table__body--tableItem">{student.counselor}</td>
           <td className="table__body--tableItem">{student.speciality}</td>
@@ -99,7 +100,7 @@ function App() {
               student.social_networks.map((eachSocialNetwork, index) => {
                 return (
                   <a
-                    key={`${studentIndex}-${student.name}-${eachSocialNetwork.name}-${index}`}
+                    key={index+1}
                     className="table__body--tableSocialNetworkItem--socialNetwork"
                     href={eachSocialNetwork.url}
                   >
